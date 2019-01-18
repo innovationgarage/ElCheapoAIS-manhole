@@ -1,0 +1,8 @@
+manhole-ordering.txt
+manhole-log.txt
+manhole-headers.txt
+manhole-script
+env
+*.pyc
+*.~
+*.sqlite3
