@@ -1,5 +1,7 @@
 #! /bin/bash
 
+cd "$1"
+
 source ./config
 
 if ! [ -e ./manhole-ordering.txt ]; then
