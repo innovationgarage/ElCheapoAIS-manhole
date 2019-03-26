@@ -4,5 +4,5 @@ manhole-headers.txt
 manhole-script
 env
 *.pyc
-*.~
+*~
 *.sqlite3

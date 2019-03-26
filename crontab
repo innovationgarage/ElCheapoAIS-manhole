@@ -1,2 +1,2 @@
-# m h  dom mon dow   command
-* * * * * /root/ElCheapoAIS-manhole/manhole.sh /etc/elcheapoais
+# m h dom mon dow user  command
+  * * *   *   *   root  manhole.sh /etc/elcheapoais
