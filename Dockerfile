@@ -7,7 +7,6 @@ RUN apt install -y python3 python3-pip
 
 RUN pip3 install Django
 
-ADD server.sh /server.sh
-ADD ElcheapoAIS_manhole /ElcheapoAIS_manhole
+ADD ./ /ElcheapoAIS_manhole
 
-CMD ["/bin/bash", "/server.sh"]
+CMD ["/bin/bash", "/ElcheapoAIS_manhole/server.sh"]
