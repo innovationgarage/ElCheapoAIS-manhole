@@ -1,2 +1,2 @@
 # m h dom mon dow user  command
-  * * *   *   *   root  manhole.sh /etc/elcheapoais
+  * * *   *   *   root  manhole.sh /etc/elcheapoais > /tmp/manhole.txt 2>&1
