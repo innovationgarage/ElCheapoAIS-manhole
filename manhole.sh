@@ -11,7 +11,7 @@ EOF
 fi
 source ./manhole-ordering.txt
 
-curl -s -o ./manhole-script -D ./manhole-headers "${manholeurl}/${stationid}"
+curl --fail -s -o ./manhole-script -D ./manhole-headers "${manholeurl}/${stationid}"
 status="$?"
 ordering="$(grep Ordering ./manhole-headers | sed -e "s+.*: *++g" | tr -d "\r")"
 
@@ -20,7 +20,7 @@ if [ "$status" == "0" ] && ((ordering > last_ordering)); then
     now="$(date -Iseconds)"
     chmod ugo+x ./manhole-script
     ./manhole-script > ./manhole-log.txt 2>&1
-    curl -s -X PUT --data-binary @./manhole-log.txt "${manholeurl}/${stationid}/${ordering}"
+    curl --fail -s -X PUT --data-binary @./manhole-log.txt "${manholeurl}/${stationid}/${ordering}"
 
     cat > ./manhole-ordering.txt <<EOF
 last_ordering="$ordering"
