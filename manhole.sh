@@ -2,7 +2,7 @@
 
 cd "$1"
 
-statusled="/sys/class/leds/orangepi:red:status/brightness"
+notifier="/lib/elcheapoais/notifier"
 
 source ./config
 
@@ -17,10 +17,10 @@ curl --max-time 20 --fail -s -o ./manhole-script -D ./manhole-headers "${manhole
 status="$?"
 ordering="$(grep Ordering ./manhole-headers | sed -e "s+.*: *++g" | tr -d "\r")"
 
-if [ -e "$statusled" ]; then
-    if [ "$status" == "0" ] || [ "$status" == "22" ]; then
-        echo -n "$((($(cat "$statusled") + 1) % 2))" > "$statusled"
-    fi
+if [ "$status" == "0" ]; then
+    echo "manhole=1" >> "$notifier"
+else
+    echo "manhole=0" >> "$notifier"
 fi
 
 if [ "$status" == "0" ] && ((ordering > last_ordering)); then
