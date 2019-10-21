@@ -11,7 +11,7 @@ function get_config () {
 python <<EOF
 import dbus
 bus = dbus.SessionBus()
-print(str(bus.get_object("no.innovationgarage.elcheapoais.config", "$1").Get("$2", "$3")))
+print(str(bus.get_object("no.innovationgarage.elcheapoais.config", "$1").Get("$2", "$3", dbus_interface='org.freedesktop.DBus.Properties')))
 EOF
 }
 manholeurl="$(get_config "/no/innovationgarage/elcheapoais/install" "no.innovationgarage.elcheapoais.manhole" "url")"
