@@ -22,7 +22,7 @@ if sys.argv[1] == "status":
     status_object = StatusObject(bus, '/no/innovationgarage/elcheapoais/manhole')
 
     def emit():
-        status_object.manhole(json.loads(sys.argv[1]), json.loads(sys.argv[2]))
+        status_object.manhole(json.loads(sys.argv[2]), json.loads(sys.argv[3]))
         sys.exit(1)
     gi.repository.GLib.timeout_add(0, emit)
 
