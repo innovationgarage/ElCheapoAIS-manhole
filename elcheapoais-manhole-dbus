@@ -8,8 +8,9 @@ import sys
 import json
 import os
 
-bus = getattr(dbus, os.environ.get("ELCHEAPOAIS_DBUS", "SystemBus"))()
 dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
+
+bus = getattr(dbus, os.environ.get("ELCHEAPOAIS_DBUS", "SystemBus"))()
 
 if sys.argv[1] == "status":
     class StatusObject(dbus.service.Object):
