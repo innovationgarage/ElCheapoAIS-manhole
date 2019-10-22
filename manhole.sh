@@ -8,7 +8,7 @@ echo "SCRIPTDIR=$SCRIPTDIR"
 notifier="/lib/elcheapoais/notifier"
 
 manholeurl="$(${SCRIPTDIR}/elcheapoais-manhole-dbus config "/no/innovationgarage/elcheapoais/install" "no.innovationgarage.elcheapoais.manhole" "url")"
-stationid="$(SCRIPTDIR}/elcheapoais-manhole-dbus config "/no/innovationgarage/elcheapoais/receiver" "no.innovationgarage.elcheapoais.receiver" "station_id")"
+stationid="$(${SCRIPTDIR}/elcheapoais-manhole-dbus config "/no/innovationgarage/elcheapoais/receiver" "no.innovationgarage.elcheapoais.receiver" "station_id")"
 
 if ! [ -e ./manhole-ordering.txt ]; then
     cat > ./manhole-ordering.txt <<EOF
