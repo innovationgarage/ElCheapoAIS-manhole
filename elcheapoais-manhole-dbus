@@ -1,0 +1,42 @@
+#!/usr/bin/env python3
+
+import dbus
+import dbus.service
+import dbus.mainloop.glib
+import gi.repository.GLib
+import sys
+import json
+
+bus = getattr(dbus, os.environ.get("ELCHEAPOAIS_DBUS", "SystemBus"))()
+dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
+
+if sys.argv[1] == "status":
+    class StatusObject(dbus.service.Object):
+        @dbus.service.signal('no.innovationgarage.elcheapoais')
+        def manhole(self, status, errno):
+            pass
+
+    name = dbus.service.BusName('no.innovationgarage.elcheapoais.manhole', bus)
+    status_object = StatusObject(bus, '/no/innovationgarage/elcheapoais/manhole')
+
+    def emit():
+        status_object.manhole(json.loads(sys.argv[1]), json.loads(sys.argv[2]))
+        sys.exit(1)
+    gi.repository.GLib.timeout_add(0, emit)
+
+    loop = gi.repository.GLib.MainLoop()
+    loop.run()
+
+elif sys.argv[1] == "config":
+    print(str(
+        bus.get_object(
+            "no.innovationgarage.elcheapoais.config", sys.argv[2]
+        ).Get(
+            sys.argv[3], sys.argv[4],
+            dbus_interface='org.freedesktop.DBus.Properties')))
+else:
+    printf("""Usage
+elcheapoais-manhole-dbus status STATUS ERRNO
+
+elcheapoais-manhole-dbus config OBJECT_PATH PROPERTY_INTERFACE PROPERTY_NAME
+""")

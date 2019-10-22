@@ -7,15 +7,8 @@ echo "SCRIPTDIR=$SCRIPTDIR"
 
 notifier="/lib/elcheapoais/notifier"
 
-function get_config () {
-python <<EOF
-import dbus
-bus = dbus.SessionBus()
-print(str(bus.get_object("no.innovationgarage.elcheapoais.config", "$1").Get("$2", "$3", dbus_interface='org.freedesktop.DBus.Properties')))
-EOF
-}
-manholeurl="$(get_config "/no/innovationgarage/elcheapoais/install" "no.innovationgarage.elcheapoais.manhole" "url")"
-stationid="$(get_config "/no/innovationgarage/elcheapoais/receiver" "no.innovationgarage.elcheapoais.receiver" "station_id")"
+manholeurl="$(${SCRIPTDIR}/elcheapoais-manhole-dbus config "/no/innovationgarage/elcheapoais/install" "no.innovationgarage.elcheapoais.manhole" "url")"
+stationid="$(SCRIPTDIR}/elcheapoais-manhole-dbus config "/no/innovationgarage/elcheapoais/receiver" "no.innovationgarage.elcheapoais.receiver" "station_id")"
 
 if ! [ -e ./manhole-ordering.txt ]; then
     cat > ./manhole-ordering.txt <<EOF
@@ -32,7 +25,7 @@ ordering="$(grep Ordering ./manhole-headers | sed -e "s+.*: *++g" | tr -d "\r")"
 echo "Connection status: $status, ordering: $ordering, last ordering: $last_ordering" >&2
 
 
-${SCRIPTDIR}/elcheapoais-manhole-signal-status.py "$([ "$status" == "0" ] && echo "true" || echo "false")" "$status"
+${SCRIPTDIR}/elcheapoais-manhole-dbus status "$([ "$status" == "0" ] && echo "true" || echo "false")" "$status"
 
 if [ "$status" == "0" ] && ((ordering > last_ordering)); then
     echo "Workman is entering the manhole for the ${ordering}th time..." >&2
